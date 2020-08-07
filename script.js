@@ -1,5 +1,5 @@
 // Assignment Code
-var generateBtn = document.querySelector("#generate");
+document.querySelector("#generate").addEventListener("click", generatePassword());
 
 //arrays for possible characters
 var nums = ["0","1","2","3","4","5","6","7","8","9"];
@@ -8,56 +8,48 @@ var ucs = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","
 var syms = ["!","@","#","$","%","^","&","(",")","*","'","+",",",".","-","/",":",";","<",">","=","?","[","]","_","|","}","{","~"];
 var allchars = [];
 
-//defines length of password and verifies validity of user input
-var charCount = prompt("How many characters do you want your password to be?");
-  if (isNaN(charCount) || charCount == 0) {
-    alert("Please input valid number");
-    var charCount = prompt("How many characters do you want your password to be?");
-  } 
- 
-//checks what kind of characters the user wants
-var wantUpper = confirm("Do you want upper case characters?");
-var wantLower = confirm("Do you want lower case characters?");
-var wantNum = confirm("Do you want numbers?");
-var wantSpec = confirm("Do you want special characters?");
- 
-//makes sure user has selected at least one character type
-if (wantUpper == false && wantLower == false && wantNum == false && wantSpec == false){
-  alert("Must choose to include at least one character type.");
-  location.reload();
-}
-//puts together arrays of wanted characters into allchars array
-else if (wantUpper === true){
-  var allchars = allchars.concat(uws);
-}
-else if (wantLower === true){
-  var allchars = allchars.concat(lws);
-}
-else if (wantNum === true){
-  var allchars = allchars.concat(nums);
-}
-else if (wantSpec === true){
-  var allchars = allchars.concat(syms);
-}
 
+//defines length of password and verifies validity of user input
+function generatePassword(){  
+  var charCount = prompt("How many characters do you want your password to be?");
+    while (isNaN(charCount) || charCount == 0 || charCount > 128 || charCount < 8) {
+      alert("Please input valid number between 8 and 128");
+      var charCount = prompt("How many characters do you want your password to be?");
+    } 
+  
+  //checks what kind of characters the user wants
+  var wantUpper = confirm("Do you want upper case characters?");
+  var wantLower = confirm("Do you want lower case characters?");
+  var wantNum = confirm("Do you want numbers?");
+  var wantSpec = confirm("Do you want special characters?");
+ 
+  //makes sure user has selected at least one character type
+  if (wantUpper == false && wantLower == false && wantNum == false && wantSpec == false){
+    alert("Must choose to include at least one character type.");
+    location.reload();
+  }
+  //puts together arrays of wanted characters into allchars array
+  else if (wantUpper === true){
+    var allchars = allchars += ucs;
+  }
+  else if (wantLower === true){
+    var allchars = allchars += lcs;
+  }
+  else if (wantNum === true){
+    var allchars = allchars += nums;
+  }
+  else if (wantSpec === true){
+    var allchars = allchars += syms;
+  }
 
   
-// Write password to the #password input
-function generatePassword(charCount, allchars){
-  var password = "";
+    var pwd = "";
+    for (var i = 0; i < charCount; i++){
+    pwd == pwd + allchars[Math.floor(Math.random() * allchars.length)];
+    }
+    var passwordText = document.querySelector("#password");
+    passwordText.innerHTML = pwd;
+    
 
-  for (var i = 0; i == charCount.value - 1; i++){
-    password == allchars.charAt(Math.floor(Math.random) * allchars.length)
-  }
-}
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-
-
+console.log(pwd);
+} 
